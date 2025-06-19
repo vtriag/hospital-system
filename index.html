@@ -4,23 +4,291 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sistema Hospitalar</title>
+    <!-- Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- CDN Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100 text-gray-800">
-    <header class="bg-blue-600 text-white p-4">
-      <h1 class="text-2xl font-bold">Sistema Hospitalar</h1>
-    </header>
+    <header class="bg-blue-600 text-white py-6 shadow-md font-poppins">
+      <div class="max-w-6xl mx-auto flex items-center justify-between px-6">
+        <h1 class="text-2xl font-bold">
+          <a href="/">
+            <img src="images/logo.svg" alt="Logo Capacita Brasil" class="h-10" />
+          </a>
+        </h1>
+        <!-- Botão hambúrguer (só no mobile) -->
+        <button id="menu-btn" class="md:hidden text-white text-2xl transition-transform duration-300 focus:outline-none">
+          <span id="icon" class="iconify" data-icon="mdi:menu" data-inline="false"></span>
+        </button>               
+        <div id="desktop-menu" class="hidden md:block">
+          <nav class="space-x-4 text-sm font-bold">
+            <ul class="flex space-x-4">
+              <li><a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">CADASTRO</a></li>
+              <li><a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">TRIAGEM</a></li>
+              <li><a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">FILA DE ESPERA</a></li>
+              <li><a href="#" class="text-white hover:text-gray-400 transition-colors duration-200">ATENDIMENTO MÉDICO</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
 
-    <main class="p-6 max-w-4xl mx-auto">
+      <div id="mobile-menu" class="md:hidden hidden mt-4 px-6 transition-all duration-500 transform scale-y-0 origin-top">
+        <ul class="flex flex-col gap-3 text-sm font-bold">
+          <li><a href="#" class="text-white hover:text-gray-400">CADASTRO</a></li>
+          <li><a href="#" class="text-white hover:text-gray-400">TRIAGEM</a></li>
+          <li><a href="#" class="text-white hover:text-gray-400">FILA DE ESPERA</a></li>
+          <li><a href="#" class="text-white hover:text-gray-400">ATENDIMENTO MÉDICO</a></li>
+        </ul>
+      </div>      
+    </header>    
+    
+
+    <main class="p-6 max-w-6xl mx-auto">
       <section>
-        <h2 class="text-xl font-semibold mb-4">Seção Principal</h2>
-        <p class="mb-4">Conteúdo Principal e Ícone</p>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold text-blue-600 mt-6 mb-6">Cadastro de Paciente</h2>
+        <p class="text-sm sm:text-base md:text-lg mb-8 break-words">Preencha os dados do paciente para iniciar o processo de atendimento. Essas informações são essenciais para garantir um 
+        cuidado seguro e personalizado.</p>
       </section>
+
+      <section class="w-full bg-transparent py-10 font-poppins border-2 border-blue-400 rounded-2xl shadow-md">
+        <div class="max-w-4xl mx-auto px-6">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-600 mb-6">
+            Dados Pessoais
+          </h2>
+      
+          <form id="form" class="space-y-6 text-sm sm:text-base">
+            <!-- Nome -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="nome"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                Nome completo *
+              </label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                required
+                class="w-full border-none outline-none text-blue-600 bg-gray-100 placeholder-transparent"
+              />
+            </div>
+      
+            <!-- Data de nascimento e Telefone -->
+            <div class="flex flex-col md:flex-row gap-4">
+              <div class="relative border-2 border-blue-400 rounded-2xl p-4 flex-1">
+                <label
+                  for="dataNascimento"
+                  class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+                >
+                  Data de nascimento *
+                </label>
+                <input
+                  type="text"
+                  id="dataNascimento"
+                  name="dataNascimento"
+                  required
+                  class="w-full border-none outline-none text-blue-600 bg-gray-100 placeholder-transparent"
+                />
+              </div>
+      
+              <div class="relative border-2 border-blue-400 rounded-2xl p-4 flex-1">
+                <label
+                  for="telefone"
+                  class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+                >
+                  Telefone de contato *
+                </label>
+                <input
+                  type="tel"
+                  id="telefone"
+                  name="telefone"
+                  required
+                  class="w-full border-none outline-none text-blue-600 bg-gray-100 placeholder-transparent"
+                />
+              </div>
+            </div>
+      
+            <!-- CPF ou Identidade -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="cpf"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                CPF ou Identidade *
+              </label>
+              <input
+                type="text"
+                id="cpf"
+                name="cpf"
+                required
+                class="w-full border-none outline-none text-blue-600 bg-gray-100 placeholder-transparent"
+              />
+            </div>
+      
+            <!-- Responsável -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="responsavel"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                Responsável (Se menor)
+              </label>
+              <input
+                type="text"
+                id="responsavel"
+                name="responsavel"
+                class="w-full border-none outline-none text-blue-600 bg-gray-100 placeholder-transparent"
+              />
+            </div>
+      
+            <!-- Telefone de Emergência -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="emergencia"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                Telefone de Emergência *
+              </label>
+              <input
+                type="tel"
+                id="emergencia"
+                name="emergencia"
+                required
+                class="w-full border-none outline-none text-blue-600 bg-gray-100 placeholder-transparent"
+              />
+            </div>
+      
+            <!-- Informações Clínicas -->
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-blue-600 mb-6">
+              Informações Clínicas
+            </h2>
+      
+            <!-- Motivo da Visita -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="mensagem"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                Motivo da Visita *
+              </label>
+              <textarea
+                id="mensagem"
+                name="mensagem"
+                rows="5"
+                required
+                class="w-full border-none outline-none text-blue-600 bg-gray-100 placeholder-transparent resize-none"
+              ></textarea>
+            </div>
+      
+            <!-- Duração dos Sintomas -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="duracao"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                Duração dos sintomas
+              </label>
+              <input
+                type="text"
+                id="duracao"
+                name="duracao"
+                placeholder="Ex: “2 dias”, “desde ontem”"
+                class="w-full border-none outline-none text-blue-600 bg-gray-100"
+              />
+            </div>
+      
+            <!-- Comorbidades -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="comorbidades"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                Comorbidades conhecidas *
+              </label>
+              <input
+                type="text"
+                id="comorbidades"
+                name="comorbidades"
+                required
+                placeholder="Ex: diabetes, hipertensão, asma, etc."
+                class="w-full border-none outline-none text-blue-600 bg-gray-100"
+              />
+            </div>
+      
+            <!-- Alergias -->
+            <div class="relative border-2 border-blue-400 rounded-2xl p-4">
+              <label
+                for="alergias"
+                class="absolute -top-3 left-4 bg-gray-100 px-1 text-blue-600 text-xs sm:text-sm font-medium"
+              >
+                Alergias *
+              </label>
+              <input
+                type="text"
+                id="alergias"
+                name="alergias"
+                required
+                placeholder="Ex: alimentares, medicamentosas, etc."
+                class="w-full border-none outline-none text-blue-600 bg-gray-100"
+              />
+            </div>
+      
+            <button
+              type="submit"
+              class="w-full bg-blue-600 text-white py-3 rounded-2xl text-base sm:text-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
+            >
+              Cadastrar
+            </button>
+          </form>
+        </div>
+      </section>          
     </main>
 
-    <footer class="bg-gray-200 text-center py-4 mt-10">
-      <p class="text-sm text-gray-600">© 2025 Atlântico Avanti</p>
+    <footer class="bg-blue-600 text-center py-4 mt-10">
+      <p class="text-sm text-white">© 2025 Capacita Brasil</p>
     </footer>
   </body>
+
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  <script>
+    const btn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('icon');
+    let isOpen = false;
+  
+    btn.addEventListener('click', () => {
+      isOpen = !isOpen;
+  
+      // Toggle com animação do menu
+      if (isOpen) {
+        mobileMenu.classList.remove('hidden');
+        setTimeout(() => {
+          mobileMenu.classList.remove('scale-y-0');
+          mobileMenu.classList.add('scale-y-100');
+        }, 10);
+        icon.dataset.icon = 'mdi:close';
+      } else {
+        mobileMenu.classList.remove('scale-y-100');
+        mobileMenu.classList.add('scale-y-0');
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+        }, 300);
+        icon.dataset.icon = 'mdi:menu';
+      }
+    });
+  </script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
 </html>
