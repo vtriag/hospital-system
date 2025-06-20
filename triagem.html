@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Triagem de Pacientes</title>
+    <!-- Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- CDN Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Iconify CDN -->
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  </head>
+
+  <!-- Modal Pop-up -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div
+      class="bg-white rounded-2xl shadow-xl max-w-lg w-full p-8 relative font-poppins text-gray-800"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <button
+        onclick="fecharModal()"
+        class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl font-bold leading-none focus:outline-none"
+        aria-label="Fechar modal"
+      >
+        &times;
+      </button>
+      <h2 id="modal-title" class="text-2xl font-semibold mb-6 text-gray-900">Ficha do Paciente</h2>
+      <div id="modal-content" class="space-y-4 text-base leading-relaxed">
+        <!-- Conteúdo dinâmico do paciente -->
+      </div>
+    </div>
+  </div>
+  
+  <body class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
+    <header class="bg-blue-600 text-white py-6 shadow-md font-poppins">
+      <div class="max-w-6xl mx-auto flex items-center justify-between px-6">
+        <h1 class="text-2xl font-bold">
+          <a href="/">
+            <img src="images/logo.svg" alt="Logo" class="h-10" />
+          </a>
+        </h1>
+        <!-- Botão hambúrguer (só no mobile) -->
+        <button id="menu-btn" class="md:hidden text-white text-2xl transition-transform duration-300 focus:outline-none">
+          <span id="icon" class="iconify" data-icon="mdi:menu" data-inline="false"></span>
+        </button>               
+        <div id="desktop-menu" class="hidden md:block">
+          <nav class="space-x-4 text-sm font-bold">
+            <ul class="flex space-x-4">
+              <li><a href="index.html" class="text-white hover:text-gray-400 transition-colors duration-200">CADASTRO</a></li>
+              <li><a href="triagem.html" class="text-white hover:text-gray-400 transition-colors duration-200">TRIAGEM</a></li>
+              <li><a href="fila.html" class="text-white hover:text-gray-400 transition-colors duration-200">FILA DE ESPERA</a></li>
+              <li><a href="medico.html" class="text-white hover:text-gray-400 transition-colors duration-200">ATENDIMENTO MÉDICO</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="md:hidden hidden mt-4 px-6 transition-all duration-500 transform scale-y-0 origin-top">
+        <ul class="flex flex-col gap-3 text-sm font-bold">
+          <li><a href="index.html" class="text-white hover:text-gray-400">CADASTRO</a></li>
+          <li><a href="triagem.html" class="text-white hover:text-gray-400">TRIAGEM</a></li>
+          <li><a href="fila.html" class="text-white hover:text-gray-400">FILA DE ESPERA</a></li>
+          <li><a href="medico.html" class="text-white hover:text-gray-400">ATENDIMENTO MÉDICO</a></li>
+        </ul>
+      </div>      
+    </header>    
+    
+
+    <main class="flex-1 p-6 max-w-6xl mx-auto w-full">
+      <section>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold text-blue-600 mt-6 mb-6">
+          Triagem de Pacientes
+        </h2>
+        <p class="text-sm sm:text-base md:text-lg mb-8 break-words">
+          Classifique e priorize os pacientes com base nos sintomas e na urgência do atendimento
+        </p>
+      </section>
+    
+      <section class="pacientesAguardando max-w-4xl mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Cards serão inseridos aqui -->
+      </section>
+    </main>
+    
+        
+
+    <footer class="bg-blue-600 text-center py-4 mt-10">
+      <p class="text-sm text-white">© 2025 Capacita Brasil</p>
+    </footer>
+  </body>
+
+  <script src="triagem.js"></script>
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+  <script>
+    const btn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('icon');
+    let isOpen = false;
+  
+    btn.addEventListener('click', () => {
+      isOpen = !isOpen;
+  
+      // Toggle com animação do menu
+      if (isOpen) {
+        mobileMenu.classList.remove('hidden');
+        setTimeout(() => {
+          mobileMenu.classList.remove('scale-y-0');
+          mobileMenu.classList.add('scale-y-100');
+        }, 10);
+        icon.dataset.icon = 'mdi:close';
+      } else {
+        mobileMenu.classList.remove('scale-y-100');
+        mobileMenu.classList.add('scale-y-0');
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+        }, 300);
+        icon.dataset.icon = 'mdi:menu';
+      }
+    });
+  </script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+</html>
