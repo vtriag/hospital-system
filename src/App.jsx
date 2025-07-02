@@ -1,0 +1,43 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar'; // use default import
+import './App.css';
+import Cadastro from './pages/cadastro';
+import Triagem from './pages/triagem';
+import Medico from './pages/medico';
+import Tv from './pages/tv';
+import { useState, useEffect } from 'react';
+import { carregarPaciente, salvarPaciente } from './utils/storage';
+
+function App() {
+  const [pacientes, setPacientes] = useState(carregarPaciente());
+
+  useEffect(() => {
+    salvarPaciente(pacientes);
+  }, [pacientes]);
+
+  function adicionarPaciente(paciente) {
+    setPacientes([...pacientes, paciente]);
+  }
+
+  function atualizarPaciente(id, novosDados) {
+    setPacientes(pacientes.map(p => p.id === id ? { ...p, ...novosDados } : p));
+  }
+
+  function removerPaciente(id) {
+    setPacientes(pacientes.filter(p => p.id !== id));
+  }
+
+  return (
+    <Router>
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<Cadastro onAdicionar={adicionarPaciente} />} />
+        <Route path='/triagem' element={<Triagem pacientes={pacientes} onAtualizar={atualizarPaciente} />} />
+        <Route path='/medico' element={<Medico pacientes={pacientes} onRemover={removerPaciente} />} />
+        <Route path='/tv' element={<Tv pacientes={pacientes} />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
