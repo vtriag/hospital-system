@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import NavBar from "../components/NavBar";
-
+// paciente
 function Cadastro({ onAdicionar }) {
   const [nome, setNome] = useState('');
   const [motivo, setMotivo] = useState('');

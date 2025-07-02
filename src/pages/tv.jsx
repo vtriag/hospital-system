@@ -12,7 +12,7 @@ function TelaTV({ pacientes }) {
         <p>Nenhum paciente em atendimento.</p>
       ) : (
         <>
-          <p><strong>Em atendimento:</strong> {ordem[0].nome}</p> {/* ✅ Corrigido */}
+          <p><strong>Em atendimento:</strong> {ordem[0].nome}</p> 
           <h3>Próximos:</h3>
           <ul>
             {ordem.slice(1).map(p => (

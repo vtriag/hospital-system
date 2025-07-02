@@ -5,8 +5,11 @@ import Cadastro from './pages/cadastro';
 import Triagem from './pages/triagem';
 import Medico from './pages/medico';
 import Tv from './pages/tv';
+import Login from './pages/login';
 import { useState, useEffect } from 'react';
 import { carregarPaciente, salvarPaciente } from './utils/storage';
+import RotaProtegida from './components/RotaProtegida';
+
 
 function App() {
   const [pacientes, setPacientes] = useState(carregarPaciente());
@@ -31,9 +34,11 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route path='/' element={<Cadastro onAdicionar={adicionarPaciente} />} />
-        <Route path='/triagem' element={<Triagem pacientes={pacientes} onAtualizar={atualizarPaciente} />} />
-        <Route path='/medico' element={<Medico pacientes={pacientes} onRemover={removerPaciente} />} />
+        <Route path='/' element={<Login />} />
+        <Route path='/cadastro' element={<Cadastro onAdicionar={adicionarPaciente} />} />
+        {/* rotaa medico */}
+        <Route path='/triagem' element={<RotaProtegida><Triagem pacientes={pacientes} onAtualizar={atualizarPaciente} /></RotaProtegida>} />
+        <Route path='/medico' element={<RotaProtegida><Medico pacientes={pacientes} onRemover={removerPaciente} /></RotaProtegida>} />
         <Route path='/tv' element={<Tv pacientes={pacientes} />} />
       </Routes>
     </Router>
