@@ -1,3 +1,5 @@
+import NavBar from "../components/NavBar";
+
 function TelaTV({ pacientes }) {
   const urgente = pacientes.filter(p => p.prioridade === 'urgente');
   const moderado = pacientes.filter(p => p.prioridade === 'moderado');
@@ -7,6 +9,7 @@ function TelaTV({ pacientes }) {
 
   return (
     <div>
+      <NavBar></NavBar>
       <h2>Tela da TV</h2>
       {ordem.length === 0 ? (
         <p>Nenhum paciente em atendimento.</p>

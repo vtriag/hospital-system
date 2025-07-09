@@ -11,6 +11,7 @@ function Medico({ pacientes, onRemover }) {
 
   return (
     <>
+    <NavBar></NavBar>
       <h2>Médico</h2>
       {ordem.length === 0 ? (
         <p>Sem pacientes na fila</p>

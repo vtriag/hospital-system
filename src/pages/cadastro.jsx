@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import NavBar from "../components/NavBar";
+import NavPacient from "../components/NavPacient";
 // paciente
 function Cadastro({ onAdicionar }) {
   const [nome, setNome] = useState('');
@@ -20,7 +21,7 @@ function Cadastro({ onAdicionar }) {
 
   return (
     <>
-      
+      <NavPacient/>
       <form onSubmit={handleSubmit}>
         <h2>Cadastro</h2>
         <input

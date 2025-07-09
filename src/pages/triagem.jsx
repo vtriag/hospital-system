@@ -23,7 +23,7 @@ function Triagem({ pacientes, onAtualizar }) {
 
   return (
     <>
-      
+      <NavBar></NavBar>
       <h2>Triagem</h2>
 
       {semPrioridade.length === 0 ? (

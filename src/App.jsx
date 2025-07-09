@@ -32,10 +32,15 @@ function App() {
 
   return (
     <Router>
-      <NavBar />
+      
+     
+      <Routes>
+          
+      </Routes>
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/cadastro' element={<Cadastro onAdicionar={adicionarPaciente} />} />
+        
         {/* rotaa medico */}
         <Route path='/triagem' element={<RotaProtegida><Triagem pacientes={pacientes} onAtualizar={atualizarPaciente} /></RotaProtegida>} />
         <Route path='/medico' element={<RotaProtegida><Medico pacientes={pacientes} onRemover={removerPaciente} /></RotaProtegida>} />
