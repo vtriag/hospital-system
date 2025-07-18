@@ -1,12 +1,47 @@
-# React + Vite
+# Medical System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o projeto final do módulo intermediário do curso de Desenvolvimento Fullstack do Capacita Brasil. 
 
-Currently, two official plugins are available:
+Sistema simples para gerenciamento médico e paciente, desenvolvido em React com responsividade, navegação controlada e armazenamento local.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Controle de Rotas
 
-## Expanding the ESLint configuration
+O sistema utiliza o componente **HeaderController** para controlar a exibição do cabeçalho (Navbar ou Header do paciente) de acordo com a rota atual e o perfil do usuário. Isso garante uma experiência responsiva e condizente com o papel do usuário no sistema.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Login
+
+Login básico com seleção de perfil via `Select`. As credenciais são fixas para fins de teste:
+
+- **Médico**
+  - Usuário: `medico`
+  - Senha: `1234`
+- **Paciente**
+  - Usuário: `paciente`
+  - Senha: `1234`
+
+Após o login, cada usuário acessa conteúdos e funcionalidades específicas conforme seu perfil.
+
+## Perfis e Funcionalidades
+
+- **Paciente**
+  - Visualiza o cadastro de paciente
+  - Visualiza seu painel personalizado
+- **Médico**
+  - Pode realizar triagem dos pacientes (ver detalhes, definir prioridades)
+  - Visualiza painel de atendimento com fila de espera
+  - Pode iniciar e finalizar atendimentos
+  - Acesso a tela detalhada de atendimento ao paciente com possibilidade de finalizar
+
+## Armazenamento
+
+- A fila de pacientes e o atendimento em andamento são armazenados no **LocalStorage** do navegador, garantindo persistência mesmo após recarregar a página.
+
+## Responsividade
+
+- Navbar responsiva com menu hambúrguer para dispositivos móveis
+- Layout adaptável para telas pequenas e grandes, garantindo boa usabilidade em qualquer dispositivo
+
+## Equipe
+
+- Vitória Prudêncio  
+- Ranielly

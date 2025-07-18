@@ -25,14 +25,12 @@ function Doctor() {
   }
 
   function handleAtualizarPaciente(id, dadosAtualizados) {
-    const novosPacientes = usuario.pacientes.map(p =>
-      p.id === id ? { ...p, ...dadosAtualizados } : p
-    );
+    const novosPacientes = usuario.pacientes.map((p) => (p.id === id ? { ...p, ...dadosAtualizados } : p));
     atualizarUsuario(novosPacientes);
   }
 
   function handleRemoverPaciente(id) {
-    const novosPacientes = usuario.pacientes.filter(p => p.id !== id);
+    const novosPacientes = usuario.pacientes.filter((p) => p.id !== id);
     atualizarUsuario(novosPacientes);
   }
 
@@ -42,15 +40,9 @@ function Doctor() {
 
   return (
     <>
-      <PatientRegistration onCadastrarPaciente={handleCadastrarPaciente} />
-      <PatientScreening
-        pacientes={usuario.pacientes}
-        onAtualizar={handleAtualizarPaciente}
-      />
-      <ServicePanel
-        pacientes={usuario.pacientes}
-        onRemoverPaciente={handleRemoverPaciente}
-      />
+      {/* <PatientRegistration onCadastrarPaciente={handleCadastrarPaciente} /> */}
+      <PatientScreening pacientes={usuario.pacientes} onAtualizar={handleAtualizarPaciente} />
+      {/* <ServicePanel pacientes={usuario.pacientes} onRemoverPaciente={handleRemoverPaciente} /> */}
     </>
   );
 }

@@ -1,62 +1,149 @@
 import React from "react";
-import NavBar from "../components/NavBar";
+import { useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import HeroSection from "../components/HeroSection";
 
+const getPriorityText = (priority) => {
+  if (!priority) return "";
+  const p = priority.toLowerCase();
+  if (p.includes("urgente")) return "Urgente";
+  if (p.includes("moderado")) return "Moderado";
+  if (p.includes("leve")) return "Leve";
+  return priority;
+};
+
+const PatientQueueItem = ({ patient, isNextUp = false, onStart }) => (
+  <div className="text-gray-900">
+    <p className="text-lg font-medium">{patient.nome}</p>
+    <div className="mt-2 text-sm font-semibold text-gray-700 capitalize">
+      {getPriorityText(patient.prioridade)}
+    </div>
+    {/* Só mostra botão se isNextUp e médico */}
+    {isNextUp && onStart && (
+      <button
+        onClick={onStart}
+        className="flex items-center gap-2 px-6 py-2 mt-6 text-sm font-medium text-white transition-colors bg-blue-600 rounded-md shadow-sm hover:bg-blue-700"
+      >
+        <Icon icon="mdi:play" className="w-5 h-5" />
+        Iniciar Atendimento
+      </button>
+    )}
+  </div>
+);
+
 function ServicePanel({ pacientes }) {
-  const urgente = pacientes.filter((p) => p.prioridade === "urgente");
-  const moderado = pacientes.filter((p) => p.prioridade === "moderado");
-  const leve = pacientes.filter((p) => p.prioridade === "leve");
+  const navigate = useNavigate();
+
+  // Pega tipo do usuário para condicional
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const isMedico = usuario?.tipo === "medico";
+
+  const pacientesFila =
+    pacientes || JSON.parse(localStorage.getItem("fila")) || [];
+  const pacienteEmAtendimento = JSON.parse(
+    localStorage.getItem("emAtendimento")
+  );
+
+  const urgente = pacientesFila.filter((p) =>
+    p.prioridade.toLowerCase().includes("urgente")
+  );
+  const moderado = pacientesFila.filter((p) =>
+    p.prioridade.toLowerCase().includes("moderado")
+  );
+  const leve = pacientesFila.filter((p) =>
+    p.prioridade.toLowerCase().includes("leve")
+  );
 
   const ordem = [...urgente, ...moderado, ...leve];
+  const proximoPaciente = ordem[0];
+  const proximosNaFila = ordem.slice(1);
+
+  const iniciarAtendimento = () => {
+    if (proximoPaciente && !pacienteEmAtendimento) {
+      localStorage.setItem("emAtendimento", JSON.stringify(proximoPaciente));
+      const novaFila = pacientesFila.filter((p) => p.id !== proximoPaciente.id);
+      localStorage.setItem("fila", JSON.stringify(novaFila));
+      navigate("/PatientManagement");
+    }
+  };
 
   return (
     <>
       <HeroSection
         title="Painel de Atendimento"
         subtitle="Acompanhe os pacientes em atendimento e os próximos na fila."
-        iconName="mdi:television"
+        iconName="mdi:television-classic"
       />
 
-      <main className="mx-auto p-8 bg-white shadow-lg font-inter min-h-[70vh]">
-        {ordem.length === 0 ? (
-          <p className="mt-20 text-lg text-center text-gray-600">
-            Nenhum paciente em atendimento.
-          </p>
-        ) : (
-          <div className="flex flex-col gap-12">
-            <section className="p-8 text-center border-4 border-blue-600 shadow-lg rounded-3xl bg-blue-50">
-              <h2 className="mb-4 text-4xl font-bold text-blue-700">
-                Em atendimento
-              </h2>
-              <p className="text-3xl font-semibold text-blue-900">
-                {ordem[0].nome}
+      <main className="min-h-screen p-4 pt-24 bg-gray-50 font-inter sm:p-8">
+        <section className="flex flex-col max-w-5xl gap-10 mx-auto">
+          {ordem.length === 0 && !pacienteEmAtendimento ? (
+            <div className="mt-20 text-center text-gray-500">
+              <Icon
+                icon="mdi:account-heart-outline"
+                className="w-12 h-12 mx-auto text-gray-400"
+              />
+              <p className="mt-4 text-lg">Nenhum paciente na fila.</p>
+              <p className="text-sm">
+                A fila de atendimento está vazia no momento.
               </p>
-              <p className="mt-1 text-lg text-blue-700 capitalize">
-                Prioridade:{" "}
-                <span className="font-medium">{ordem[0].prioridade}</span>
-              </p>
-            </section>
+            </div>
+          ) : (
+            <>
+              <section>
+                <header className="flex items-center gap-3 mb-4 text-xl font-bold text-gray-800">
+                  <Icon
+                    icon="mdi:account-star-outline"
+                    className="text-blue-600"
+                    width={26}
+                  />
+                  <span>
+                    {pacienteEmAtendimento
+                      ? "Em Atendimento"
+                      : "Próximo Paciente"}
+                  </span>
+                </header>
+                <div>
+                  {pacienteEmAtendimento ? (
+                    <PatientQueueItem patient={pacienteEmAtendimento} />
+                  ) : proximoPaciente ? (
+                    <PatientQueueItem
+                      patient={proximoPaciente}
+                      isNextUp={isMedico} // Só habilita botão se médico
+                      onStart={isMedico ? iniciarAtendimento : null}
+                    />
+                  ) : null}
+                </div>
+              </section>
 
-            <section>
-              <h3 className="pb-2 mb-4 text-2xl font-semibold text-blue-700 border-b border-blue-300">
-                Próximos na fila
-              </h3>
-              <ul className="space-y-3 max-h-[300px] overflow-y-auto">
-                {ordem.slice(1).map((p) => (
-                  <li
-                    key={p.id}
-                    className="flex items-center justify-between p-4 font-medium text-blue-900 bg-blue-100 shadow-inner rounded-xl"
-                  >
-                    <span>{p.nome}</span>
-                    <span className="px-3 py-1 font-semibold text-blue-900 capitalize bg-blue-300 rounded-full">
-                      {p.prioridade}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
-        )}
+              {proximosNaFila.length > 0 && (
+                <section>
+                  <header className="flex items-center gap-3 mb-4 text-xl font-bold text-gray-800">
+                    <Icon
+                      icon="mdi:format-list-numbered"
+                      className="text-blue-600"
+                      width={26}
+                    />
+                    <span>Fila de Espera</span>
+                  </header>
+                  <ul className="divide-y divide-gray-200 max-h-[450px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    {proximosNaFila.map((p) => (
+                      <li
+                        key={p.id}
+                        className="flex items-center justify-between px-5 py-3 text-gray-800 transition-colors hover:bg-gray-50"
+                      >
+                        <span>{p.nome}</span>
+                        <span className="text-sm font-semibold text-gray-700 capitalize">
+                          {getPriorityText(p.prioridade)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </>
+          )}
+        </section>
       </main>
     </>
   );
